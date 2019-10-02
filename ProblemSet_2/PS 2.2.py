@@ -1,35 +1,37 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sat Sep 21 12:18:14 2019
+Created on Wed Oct  2 16:28:13 2019
 
 @author: ayse
 """
-
 """
-Calculates the minimum fixed monthly payment to pay off a credit card balance
-within 12 months. 
+Searches for the smallest monthly payment that can pay off the entire balance within a year. 
 
-balance: the outstanding balance on the credit card
+    Monthly interest rate = (Annual interest rate) / 12.0
+    
+    Monthly payment lower bound = Balance / 12
+    
+    Monthly payment upper bound = (Balance x (1 + Monthly interest rate)12) / 12.0
 
-annualInterestRate: annual interest rate as a decimal
-
-Returns the lowest monthly payment that will pay off all debt in under 1 year. 
+Uses bisection search to find the smallest monthly payment to the cent. 
 """
 
-
-monthlyPaymentRate = 0
 init_balance = balance
 monthlyInterestRate = annualInterestRate/12
+lower = init_balance/12
+upper = (init_balance * (1 + monthlyInterestRate)**12)/12.0
+epsilon = 0.01
 
-while balance > 0:
+while abs(balance) > epsilon:
+    monthlyPaymentRate = (upper + lower)/2
+    balance = init_balance
     for i in range(12):
         balance = balance - monthlyPaymentRate + ((balance - monthlyPaymentRate) * monthlyInterestRate)
-    if balance > 0:
-        monthlyPaymentRate += 10
-        balance = init_balance
-    elif balance <= 0:
+    if balance > epsilon:
+        lower = monthlyPaymentRate
+    elif balance < -epsilon:
+        upper = monthlyPaymentRate
+    else:
         break
-print('Lowest Payment:', monthlyPaymentRate)
-
-
+print('Lowest Payment:', round(monthlyPaymentRate, 2))
