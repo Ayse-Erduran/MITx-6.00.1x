@@ -17,10 +17,7 @@ annualInterestRate: annual interest rate as a decimal
 Returns the lowest monthly payment that will pay off all debt in under 1 year. 
 """
 
-balance = 3329
-annualInterestRate = 0.2
 initBalance = balance 
-
 minFixed = 0
 
 while True:
@@ -33,3 +30,7 @@ while True:
         False
         
 print("Lowest payment: " + str(minFixed))
+
+
+
+
