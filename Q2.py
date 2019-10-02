@@ -11,7 +11,6 @@ Created on Thu Sep 12 10:05:45 2019
 #For example, if s = 'azcbobobegghakl', then your program should print
 #Number of times bob occurs is: 2
 
-s = 'azcbobobegghakl'
 i = 0
 times = 0
 while i <= len(s)-3:
